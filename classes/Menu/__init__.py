@@ -1,5 +1,6 @@
 from ..Window import *
 from ..Button import *
+from ..TestingLevel import *
 import sys
 
 
@@ -14,7 +15,7 @@ class Menu(Window):
         self.exit = Button(self, "PNG\\White\\2x\\exit.png")
         self.exit.resize(80, 80)
         self.exit.move(560, 0)
-        self.exit.set_func(self.exit)
+        self.exit.set_func(self.exitFunc)
         self.start = Button(self, "PNG\\White\\2x\\buttonStart.png")
         self.start.resize(100, 100)
         self.start.move(270, 190)
@@ -22,16 +23,17 @@ class Menu(Window):
         self.set_background("bg.jpg")
 
     def startFunc(self):
-        pass
+        TestingLevel(self.screen)
+        self.exitFunc()
 
-    def exit(self):
+    def exitFunc(self):
         pygame.quit()
         sys.exit()
 
     def run(self):
         pygame.init()
         pygame.mixer.music.load("sprites\\Music\\menu.mp3")
-        pygame.mixer.music.set_volume(0.05)
+        pygame.mixer.music.set_volume(0.1)
         pygame.mixer.music.play()
         run = True
         while run:
