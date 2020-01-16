@@ -14,7 +14,7 @@ class Menu(Window):
         self.exit = Button(self, "PNG\\White\\2x\\exit.png")
         self.exit.resize(80, 80)
         self.exit.move(560, 0)
-        self.exit.set_func(self.exit)
+        self.exit.set_func(self.exitFunc)
         self.start = Button(self, "PNG\\White\\2x\\buttonStart.png")
         self.start.resize(100, 100)
         self.start.move(270, 190)
@@ -24,7 +24,7 @@ class Menu(Window):
     def startFunc(self):
         pass
 
-    def exit(self):
+    def exitFunc(self):
         pygame.quit()
         sys.exit()
 
