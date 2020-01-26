@@ -1,6 +1,7 @@
 from ..Window import *
 from ..Button import *
 import sys
+from ..Level import *
 
 
 class Menu(Window):
@@ -22,7 +23,7 @@ class Menu(Window):
         self.set_background("bg.jpg")
 
     def startFunc(self):
-        pass
+        Level("1", self.screen)
 
     def exitFunc(self):
         pygame.quit()
