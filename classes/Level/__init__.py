@@ -1,5 +1,7 @@
 import pygame
 from ..Floor import *
+from ..Hero import *
+from ..Door import *
 
 
 class Level:
@@ -17,7 +19,7 @@ class Level:
                 if self.data[line][elem] == ".":
                     pass
                 if self.data[line][elem] == "#":
-                    pass  # TODO
+                    self.hero = Hero(elem, line)
                 if self.data[line][elem] == "f":
                     self.sprites.add(Floor(elem, line))
                 if self.data[line][elem] == "w":
@@ -26,9 +28,15 @@ class Level:
                 if self.data[line][elem] == "@":
                     self.sprites.add(None)  # Турель.
                     pass  # TODO
+                if self.data[line][elem] == "d":
+                    self.sprites.add(Door(elem, line))
         self.run()
 
     def run(self):
+        """
+        Начало дейсвтия.
+        :return: ничего
+        """
         run = True
         while run:
             for event in pygame.event.get():
