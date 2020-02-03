@@ -3,7 +3,7 @@ import os
 
 
 player_group, all_sprites, obstacles = pygame.sprite.Group(), pygame.sprite.Group(), pygame.sprite.Group()
-close_doors, all_electricity  = pygame.sprite.Group(), pygame.sprite.Group()
+close_doors, all_electricity = pygame.sprite.Group(), pygame.sprite.Group()
 tile_width, tile_height = 0, 0
 
 

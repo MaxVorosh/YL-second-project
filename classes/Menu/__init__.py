@@ -23,7 +23,7 @@ class Menu(Window):
         self.set_background("bg.jpg")
 
     def startFunc(self):
-        Level("1", self.screen)
+        Level("2", self.screen)
 
     def exitFunc(self):
         pygame.quit()
