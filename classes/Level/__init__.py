@@ -7,6 +7,7 @@ from ..Turret import *
 from ..Wall import *
 from ..Border import *
 from ..Bullet import *
+from ..Congratulations import *
 
 
 flags = {(0, -1): False, # up
@@ -38,6 +39,7 @@ class Level:
         self.turrets, self.bullets = pygame.sprite.Group(), pygame.sprite.Group()
         self.data = [[i for i in l] for l in open(f"levels\\{level}.txt").read().split("\n")]
         self.screen = screen
+        self.level = int(level)
         for i in [(0, 0, 640, 0), (0, 0, 0, 480), (0, 480, 640, 480), (640, 0, 640, 480)]:
             self.borders.add(Border(*i, self.borders))
         for line in range(len(self.data)):
@@ -103,12 +105,15 @@ class Level:
                 if flags[i]:
                     self.hero.update(i[0], i[1], self.walls, self.borders)
             for bul in self.bullets:
-                bul.update(self.walls, self.borders)
+                bul.update(self.walls, self.borders, self.turrets)
             if pygame.sprite.spritecollideany(self.hero, self.door):
-                self.exit_Func()
-                # TODO Хороший конец игры
+                if self.level < 5:
+                    Level(str(self.level + 1), self.screen)
+                else:
+                    cong = Congratulations()
+                    run = False
             if pygame.sprite.spritecollideany(self.hero, self.danger):
-                Level("2", self.screen)
+                Level(str(self.level), self.screen)
             self.sprites.draw(self.screen)
             self.Hero.draw(self.screen)
             clock.tick(fps)

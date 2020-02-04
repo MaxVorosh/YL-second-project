@@ -8,4 +8,3 @@ class Door(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x * 40
         self.rect.y = y * 40
-
