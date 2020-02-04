@@ -6,6 +6,7 @@ from ..Door import *
 from ..Turret import *
 from ..Wall import *
 from ..Border import *
+from ..Bullet import *
 
 
 flags = {(0, -1): False, # up
@@ -16,13 +17,13 @@ flags = {(0, -1): False, # up
 
 def update_flags(event, val):
     if event.key == pygame.K_UP:
-        flags[(0, -1)] = val
+        flags[(0, -2)] = val
     if event.key == pygame.K_DOWN:
-        flags[(0, 1)] = val
+        flags[(0, 2)] = val
     if event.key == pygame.K_LEFT:
-        flags[(-1, 0)] = val
+        flags[(-2, 0)] = val
     if event.key == pygame.K_RIGHT:
-        flags[(1, 0)] = val
+        flags[(2, 0)] = val
 
 
 class Level:
@@ -32,8 +33,9 @@ class Level:
         :param level: название уровня. Папку уровней прописывать нет необходимости.
         :param screen: экран, на котором было открыто меню или другой уровень.
         """
-        self.sprites, self.obstacles, self.Hero = pygame.sprite.Group(), pygame.sprite.Group(), pygame.sprite.Group()
-        self.borders = pygame.sprite.Group()
+        self.sprites, self.walls, self.Hero = pygame.sprite.Group(), pygame.sprite.Group(), pygame.sprite.Group()
+        self.borders, self.door, self.danger = pygame.sprite.Group(), pygame.sprite.Group(), pygame.sprite.Group()
+        self.turrets, self.bullets = pygame.sprite.Group(), pygame.sprite.Group()
         self.data = [[i for i in l] for l in open(f"levels\\{level}.txt").read().split("\n")]
         self.screen = screen
         for i in [(0, 0, 640, 0), (0, 0, 0, 480), (0, 480, 640, 480), (640, 0, 640, 480)]:
@@ -47,20 +49,21 @@ class Level:
                     self.hero = Hero(elem, line)
                     self.sprites.add(Floor(elem, line))
                     self.Hero.add(self.hero)
-                if self.data[line][elem] == "f":
+                if self.data[line][elem] == ".":
                     self.sprites.add(Floor(elem, line))
                 if self.data[line][elem] == "w":
                     w = Wall(elem, line)
                     self.sprites.add(w)
-                    self.obstacles.add(w)
+                    self.walls.add(w)
                 if self.data[line][elem] == "@":
                     t = Turret(elem, line)  # Турель.
                     self.sprites.add(t)
-                    self.obstacles.add(t)
+                    self.danger.add(t)
+                    self.turrets.add(t)
                 if self.data[line][elem] == "d":
-                    d = Door(elem, line)
+                    d = Door(elem, line, self.door)
                     self.sprites.add(d)
-                    self.obstacles.add(d)
+                    self.door.add(d)
         self.run()
 
     def exit_Func(self):
@@ -73,7 +76,10 @@ class Level:
         :return: ничего
         """
         run = True
-        fps = 120
+        fps = 60
+        timer = 27
+        vb = 3
+        pygame.time.set_timer(timer, 1000)
         clock = pygame.time.Clock()
         while run:
             for event in pygame.event.get():
@@ -83,10 +89,26 @@ class Level:
                     update_flags(event, True)
                 if event.type == pygame.KEYUP:
                     update_flags(event, False)
+                if event.type == timer:
+                    for turret in self.turrets:
+                        x, y = turret.rect.x, turret.rect.y
+                        b_up, b_left, b_down, b_right = (Bullet(x + 15, y - 5, 0, -vb), Bullet(x - 5, y + 15, -vb, 0),
+                                                         Bullet(x + 15, y + 45, 0, vb), Bullet(x + 45, y + 15, vb, 0))
+                        for bul in [b_up, b_left, b_right, b_down]:
+                            self.sprites.add(bul)
+                            self.danger.add(bul)
+                            self.bullets.add(bul)
             self.screen.fill((0, 0, 0))
             for i in flags.keys():
                 if flags[i]:
-                    self.hero.update(i[0], i[1], self.obstacles, self.borders)
+                    self.hero.update(i[0], i[1], self.walls, self.borders)
+            for bul in self.bullets:
+                bul.update(self.walls, self.borders)
+            if pygame.sprite.spritecollideany(self.hero, self.door):
+                self.exit_Func()
+                # TODO Хороший конец игры
+            if pygame.sprite.spritecollideany(self.hero, self.danger):
+                Level("2", self.screen)
             self.sprites.draw(self.screen)
             self.Hero.draw(self.screen)
             clock.tick(fps)
