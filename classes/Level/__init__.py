@@ -55,8 +55,8 @@ class Level:
                     self.sprites.add(w)
                     self.walls.add(w)
                 if self.data[line][elem] == "@":
-                    t = Turret(elem, line)  # Турель.
-                    self.sprites.add(t)
+                    t = Turret(elem, line, screen)  # Турель.
+                    self.sprites.add(Floor(elem, line))
                     self.danger.add(t)
                     self.turrets.add(t)
                 if self.data[line][elem] == "d":
@@ -116,6 +116,7 @@ class Level:
                 Level(str(self.level), self.screen)
             self.sprites.draw(self.screen)
             self.Hero.draw(self.screen)
+            self.turrets.draw(self.screen)
             clock.tick(fps)
             pygame.display.flip()
         self.exit_Func()
