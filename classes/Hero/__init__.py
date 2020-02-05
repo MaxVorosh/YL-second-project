@@ -12,7 +12,7 @@ class Hero(pygame.sprite.Sprite):
         self.cut_sheet(sheet, columns, rows)
         self.cur_frame = 0
         self.image = self.frames[self.cur_frame]
-        self.rect = self.rect.move(x * 40, y * 40)
+        self.rect = self.rect.move(x * 40 + 1, y * 40 + 1)
 
     def cut_sheet(self, sheet, columns, rows):
         self.rect = pygame.Rect(0, 0, sheet.get_width() // columns,

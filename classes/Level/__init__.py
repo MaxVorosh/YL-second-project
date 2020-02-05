@@ -10,10 +10,10 @@ from ..Bullet import *
 from ..Congratulations import *
 
 
-flags = {(0, -1): False, # up
-        (0, 1): False, # down
-        (-1, 0): False, # left
-        (0, 1): False} # right
+flags = {(0, -1): False,  # up
+         (0, 1): False,  # down
+         (-1, 0): False,  # left
+         (0, 1): False}  # right
 
 
 def update_flags(event, val):
@@ -44,9 +44,6 @@ class Level:
             self.borders.add(Border(*i, self.borders))
         for line in range(len(self.data)):
             for elem in range(len(self.data[line])):
-                # if self.data[line][elem] == ".":
-                #     pass
-                # Зачем нам просто пустое пространство? Можно всё замостить полом
                 if self.data[line][elem] == "#":
                     self.hero = Hero(elem, line)
                     self.sprites.add(Floor(elem, line))
@@ -94,8 +91,8 @@ class Level:
                 if event.type == timer:
                     for turret in self.turrets:
                         x, y = turret.rect.x, turret.rect.y
-                        b_up, b_left, b_down, b_right = (Bullet(x + 15, y - 5, 0, -vb), Bullet(x - 5, y + 15, -vb, 0),
-                                                         Bullet(x + 15, y + 45, 0, vb), Bullet(x + 45, y + 15, vb, 0))
+                        b_up, b_left, b_down, b_right = (Bullet(x + 15, y - 3, 0, -vb), Bullet(x - 3, y + 15, -vb, 0),
+                                                         Bullet(x + 15, y + 43, 0, vb), Bullet(x + 43, y + 15, vb, 0))
                         for bul in [b_up, b_left, b_right, b_down]:
                             self.sprites.add(bul)
                             self.danger.add(bul)
@@ -105,13 +102,16 @@ class Level:
                 if flags[i]:
                     self.hero.update(i[0], i[1], self.walls, self.borders)
             for bul in self.bullets:
-                bul.update(self.walls, self.borders, self.turrets)
+                bul.update(self.walls, self.borders, self.turrets, self.door)
             if pygame.sprite.spritecollideany(self.hero, self.door):
                 if self.level < 5:
                     Level(str(self.level + 1), self.screen)
                 else:
                     cong = Congratulations()
-                    run = False
+                    if cong.fl:
+                        for i in flags.keys():
+                            flags[i] = False
+                        Level("1", self.screen)
             if pygame.sprite.spritecollideany(self.hero, self.danger):
                 Level(str(self.level), self.screen)
             self.sprites.draw(self.screen)
