@@ -116,7 +116,7 @@ class Level:
                 if self.level < len(os.listdir("levels")):
                     Level(str(self.level + 1), self.screen)
                 else:
-                    cong = Congratulations()
+                    cong = Congratulations(self.screen)
                     if cong.fl:
                         for i in flags.keys():
                             flags[i] = False
