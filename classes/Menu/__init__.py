@@ -11,14 +11,14 @@ class Menu(Window):
         self.run()
 
     def ui(self):
-        self.resize(640, 480)
+        self.resize(640, 640)
         self.exit = Button(self, "PNG\\White\\2x\\exit.png")
         self.exit.resize(80, 80)
         self.exit.move(560, 0)
         self.exit.set_func(self.exitFunc)
         self.start = Button(self, "PNG\\White\\2x\\buttonStart.png")
         self.start.resize(100, 100)
-        self.start.move(270, 190)
+        self.start.move(270, 270)
         self.start.set_func(self.startFunc)
         self.set_background("bg.jpg")
 
