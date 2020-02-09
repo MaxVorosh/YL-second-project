@@ -87,7 +87,7 @@ class Level:
         fps = 60
         timer = 27
         vb = 3
-        pygame.time.set_timer(timer, 1000)
+        pygame.time.set_timer(timer, 1700)
         clock = pygame.time.Clock()
         while run:
             for event in pygame.event.get():
