@@ -20,13 +20,13 @@ flags = {(0, -1): False,  # up
 
 def update_flags(event, val):
     if event.key == pygame.K_UP:
-        flags[(0, -2)] = val
+        flags[(0, -3)] = val
     if event.key == pygame.K_DOWN:
-        flags[(0, 2)] = val
+        flags[(0, 3)] = val
     if event.key == pygame.K_LEFT:
-        flags[(-2, 0)] = val
+        flags[(-3, 0)] = val
     if event.key == pygame.K_RIGHT:
-        flags[(2, 0)] = val
+        flags[(3, 0)] = val
 
 
 class Level:
