@@ -1,4 +1,3 @@
-import pygame
 from ..Button import *
 
 
