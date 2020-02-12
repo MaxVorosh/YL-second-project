@@ -6,6 +6,7 @@ class Button(pygame.sprite.Sprite):
     """
     Класс кнопки в меню.
     """
+
     def __init__(self, window, path):
         """
         Принимает на вход окно, в котором располагается и путь к своему спрайту.

@@ -1,4 +1,3 @@
-import pygame
 from ..Border import *
 import os
 

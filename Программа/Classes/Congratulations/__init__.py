@@ -1,16 +1,14 @@
-from ..Button import *
 from ..Window import *
 from ..Particle import *
 import sys
-import pygame
 from random import choice
-
 
 Particles = pygame.sprite.Group()
 
 
 def make_fon(screen, intro_text):
-    fon = pygame.transform.scale(load_image('bg.jpg', screen), (screen.get_width(), screen.get_height()))
+    fon = pygame.transform.scale(load_image('bg.jpg', screen),
+                                 (screen.get_width(), screen.get_height()))
     screen.blit(fon, (0, 0))
     font = pygame.font.Font(None, 30)
     text_coord = 190

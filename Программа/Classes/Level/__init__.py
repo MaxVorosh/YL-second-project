@@ -1,5 +1,3 @@
-import pygame
-import sys
 from ..Floor import *
 from ..Hero import *
 from ..Door import *
@@ -9,8 +7,6 @@ from ..Border import *
 from ..Bullet import *
 from ..Congratulations import *
 from ..Loading import *
-import os
-
 
 flags = {(0, -1): False,  # up
          (0, 1): False,  # down
@@ -44,7 +40,9 @@ class Level:
         self.level = int(level)
         self.loading = Loading(self.screen, len(self.data) * len(self.data[0]))
         pygame.display.flip()
-        for i in [(0, 0, self.screen.get_width(), 0), (0, 0, 0, screen.get_height()), (0, screen.get_height(), screen.get_width(), screen.get_height()), (screen.get_width(), 0, screen.get_width(), screen.get_height())]:
+        for i in [(0, 0, self.screen.get_width(), 0), (0, 0, 0, screen.get_height()),
+                  (0, screen.get_height(), screen.get_width(), screen.get_height()),
+                  (screen.get_width(), 0, screen.get_width(), screen.get_height())]:
             self.borders.add(Border(*i, self.borders))
         for line in range(len(self.data)):
             for elem in range(len(self.data[line])):
@@ -66,7 +64,7 @@ class Level:
                     self.danger.add(t)
                     self.turrets.add(t)
                 if self.data[line][elem] == "d":
-                    d = Door(elem, line, self.door)
+                    d = Door(elem, line)
                     self.sprites.add(d)
                     self.door.add(d)
                 self.loading.update()
@@ -100,8 +98,9 @@ class Level:
                 if event.type == timer:
                     for turret in self.turrets:
                         x, y = turret.rect.x, turret.rect.y
-                        b_up, b_left, b_down, b_right = (Bullet(x + 19, y - 3, 0, -vb), Bullet(x - 3, y + 19, -vb, 0),
-                                                         Bullet(x + 19, y + 43, 0, vb), Bullet(x + 43, y + 19, vb, 0))
+                        b_up, b_left, b_down, b_right = (
+                            Bullet(x + 19, y - 3, 0, -vb), Bullet(x - 3, y + 19, -vb, 0),
+                            Bullet(x + 19, y + 43, 0, vb), Bullet(x + 43, y + 19, vb, 0))
                         for bul in [b_up, b_left, b_right, b_down]:
                             self.sprites.add(bul)
                             self.danger.add(bul)

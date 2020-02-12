@@ -1,6 +1,3 @@
-from ..Window import *
-from ..Button import *
-import sys
 from ..Level import *
 
 

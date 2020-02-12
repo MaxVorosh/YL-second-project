@@ -8,7 +8,8 @@ class Loading:
         self.cell_width = screen.get_width() // 2 // length
         self.cell_height = screen.get_height() // 5
         pygame.draw.rect(screen, (69, 42, 12), (screen.get_width() // 4, screen.get_width() // 5 * 2,
-                                                screen.get_width() // 2, screen.get_height() // 5), 3)
+                                                screen.get_width() // 2, screen.get_height() // 5),
+                         3)
 
     def update(self):
         pygame.draw.rect(self.screen, (0, 100, 0),
